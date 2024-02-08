@@ -18,8 +18,26 @@ class Main extends React.Component {
 
   mostrarResult = (param) => {
     // Faça o que for necessário com o parâmetro, por exemplo:
-    this.setState({ resultText: 'Resultado: ' + param });
+    this.setState({ resultText: 'Resultado: ' + this.converter(param) });
   };
+
+  converter = (param) => {
+    let valores = param.split("");
+    let valoresInt = [];
+    let length = valores.length;
+    for (let i = 0; i < length; i++){
+      valoresInt.push(parseInt(valores[i]));
+
+    }
+    let valoresIntReverse = valoresInt.reverse();
+    let sum = 0;
+    let mult = 0;
+    valoresIntReverse.forEach(number => {
+      sum = sum + (number * (Math.pow(2, mult)));
+      mult++;
+    });
+    return sum;
+  }
 
   render() {
     return (
@@ -38,8 +56,10 @@ class Main extends React.Component {
             onChange={(e) => this.handleChange(e, 'value2')}
           />
         </div>
+        <div className='botao'>
+          <button className='botaoResult' onClick={() => this.mostrarResult(this.state.value1)}>Mostrar Resultado</button>
+        </div>
         {/* Use uma função anônima para passar o parâmetro desejado */}
-        <button onClick={() => this.mostrarResult(this.state.value1)}>Mostrar Resultado</button>
         <div className='resultado'>
           <h2 id='resultText'>{this.state.resultText}</h2>
         </div>
